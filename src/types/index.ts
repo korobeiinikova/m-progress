@@ -7,6 +7,7 @@ export type DailyEntry = {
   waist: number;
   hips: number;
   chest: number;
+  underBust?: number;
   belly: number;
   arm?: number;
   thigh?: number;

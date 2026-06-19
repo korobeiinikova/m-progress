@@ -8,6 +8,10 @@ type DailyEntryFormProps = {
 };
 
 const numberValue = (value: FormDataEntryValue | null, fallback = 0) => Number(value || fallback);
+const optionalNumberValue = (value: FormDataEntryValue | null) => {
+  const parsed = Number(value);
+  return value === null || value === "" || !Number.isFinite(parsed) ? undefined : parsed;
+};
 
 export const DailyEntryForm = ({ latest, onSubmit }: DailyEntryFormProps) => {
   const [date, setDate] = useState(todayIso());
@@ -22,10 +26,11 @@ export const DailyEntryForm = ({ latest, onSubmit }: DailyEntryFormProps) => {
       waist: numberValue(form.get("waist")),
       hips: numberValue(form.get("hips")),
       chest: numberValue(form.get("chest")),
+      underBust: optionalNumberValue(form.get("underBust")),
       belly: numberValue(form.get("belly")),
-      arm: numberValue(form.get("arm")),
-      thigh: numberValue(form.get("thigh")),
-      calf: numberValue(form.get("calf")),
+      arm: optionalNumberValue(form.get("arm")),
+      thigh: optionalNumberValue(form.get("thigh")),
+      calf: optionalNumberValue(form.get("calf")),
       sleepHours: numberValue(form.get("sleepHours")),
       energy: numberValue(form.get("energy"), 3),
       mood: numberValue(form.get("mood"), 3),
@@ -74,6 +79,10 @@ export const DailyEntryForm = ({ latest, onSubmit }: DailyEntryFormProps) => {
       <details className="form-section" open>
         <summary>Дополнительные параметры</summary>
         <div className="form-grid">
+          <label>
+            Под грудью, см
+            <input name="underBust" type="number" step="0.1" defaultValue={latest?.underBust ?? ""} />
+          </label>
           <label>
             Рука, см
             <input name="arm" type="number" step="0.1" defaultValue={latest?.arm ?? ""} />

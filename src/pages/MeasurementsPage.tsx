@@ -21,9 +21,11 @@ const colors = ["#5f8d72", "#8aa35f", "#c29f62", "#6d9ca0", "#b77978", "#8f84a7"
 export const MeasurementsPage = ({
   data,
   onAddPhoto,
+  onDeleteEntry,
 }: {
   data: AppData;
   onAddPhoto: Parameters<typeof PhotoProgress>[0]["onAdd"];
+  onDeleteEntry: (id: string) => void;
 }) => {
   const latest = latestDailyEntry(data.dailyEntries);
   const [selected, setSelected] = useState<MeasurementKey[]>(["weight", "waist", "hips", "belly"]);
@@ -123,6 +125,7 @@ export const MeasurementsPage = ({
                 {measurementKeys.map((key) => (
                   <th key={key}>{measurementLabels[key]}</th>
                 ))}
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -132,6 +135,11 @@ export const MeasurementsPage = ({
                   {measurementKeys.map((key) => (
                     <td key={key}>{entry[key] ?? "-"}</td>
                   ))}
+                  <td>
+                    <button className="button button--danger button--small" type="button" onClick={() => onDeleteEntry(entry.id)}>
+                      Удалить
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

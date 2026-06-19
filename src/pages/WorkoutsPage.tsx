@@ -16,9 +16,10 @@ import { WorkoutForm } from "../components/WorkoutForm";
 type WorkoutsPageProps = {
   data: AppData;
   onSubmit: Parameters<typeof WorkoutForm>[0]["onSubmit"];
+  onDelete: (id: string) => void;
 };
 
-export const WorkoutsPage = ({ data, onSubmit }: WorkoutsPageProps) => {
+export const WorkoutsPage = ({ data, onSubmit, onDelete }: WorkoutsPageProps) => {
   const latest = sortByDateDesc(data.workouts)[0];
   const series = buildWeeklySeries(data);
 
@@ -81,12 +82,18 @@ export const WorkoutsPage = ({ data, onSubmit }: WorkoutsPageProps) => {
         <h2>Последние тренировки</h2>
         <div className="history-list">
           {sortByDateDesc(data.workouts).slice(0, 8).map((workout) => (
-            <article key={workout.id}>
-              <strong>{workoutTypeLabels[workout.type]}</strong>
-              <span>{formatDateRu(workout.date)} - {workout.duration} мин - сложность {workout.effort}/10</span>
-              {workout.note && <small>{workout.note}</small>}
+            <article className="history-item" key={workout.id}>
+              <div>
+                <strong>{workoutTypeLabels[workout.type]}</strong>
+                <span>{formatDateRu(workout.date)} - {workout.duration} мин - сложность {workout.effort}/10</span>
+                {workout.note && <small>{workout.note}</small>}
+              </div>
+              <button className="button button--danger button--small" type="button" onClick={() => onDelete(workout.id)}>
+                Удалить
+              </button>
             </article>
           ))}
+          {!data.workouts.length && <p className="muted">Пока нет сохраненных тренировок.</p>}
         </div>
       </section>
     </div>

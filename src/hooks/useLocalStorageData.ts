@@ -28,6 +28,18 @@ export const useLocalStorageData = () => {
           workouts: [...current.workouts, { ...entry, id: createId() }],
         }));
       },
+      deleteDailyEntry: (id: string) => {
+        setData((current) => ({
+          ...current,
+          dailyEntries: current.dailyEntries.filter((entry) => entry.id !== id),
+        }));
+      },
+      deleteWorkout: (id: string) => {
+        setData((current) => ({
+          ...current,
+          workouts: current.workouts.filter((workout) => workout.id !== id),
+        }));
+      },
       updateGoals: (goals: Goals) => {
         setData((current) => ({ ...current, goals }));
       },

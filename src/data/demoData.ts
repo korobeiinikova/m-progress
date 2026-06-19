@@ -32,6 +32,7 @@ export const demoDailyEntries: DailyEntry[] = Array.from({ length: 32 }, (_, ind
     waist: Number((91.5 - index * 0.12 + Math.sin(index / 3) * 0.2).toFixed(1)),
     hips: Number((109.2 - index * 0.06 + Math.cos(index / 4) * 0.25).toFixed(1)),
     chest: Number((101.8 - index * 0.025 + Math.sin(index / 5) * 0.15).toFixed(1)),
+    underBust: Number((88.6 - index * 0.06 + Math.sin(index / 4) * 0.12).toFixed(1)),
     belly: Number((99.8 - index * 0.13 + Math.cos(index / 4) * 0.25).toFixed(1)),
     arm: Number((32.4 - index * 0.02).toFixed(1)),
     thigh: Number((64.1 - index * 0.035).toFixed(1)),
